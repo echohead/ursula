@@ -4,4 +4,12 @@
     - neutron-l3-agent
     - neutron-dhcp-agent
     - neutron-metadata-agent
+    - ucarp
   notify: restart sensu-client
+
+- sensu_check: |
+    name=check-log-ucarp
+    plugin=check-log.rb
+    use_sudo=true
+    interval=60
+    args="--log-file /var/log/syslog --pattern 'ucarp.*Switching to state: MASTER'"

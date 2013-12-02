@@ -1,4 +1,6 @@
 ---
+- include: ucarp.yml
+
 - apt: pkg={{ item }}
   with_items:
     - dnsmasq
@@ -18,3 +20,4 @@
     - neutron-l3-agent
     - neutron-dhcp-agent
     - neutron-metadata-agent
+

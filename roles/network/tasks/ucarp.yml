@@ -1,0 +1,20 @@
+---
+- apt: pkg={{ item }}
+  with_items:
+    - ucarp
+    - iputils-arping
+
+- template: src=etc/vip-up.sh dest=/etc/vip-up.sh owner=root mode=0755
+  notify: restart ucarp
+- template: src=etc/vip-down.sh dest=/etc/vip-down.sh owner=root mode=0755
+  notify: restart ucarp
+
+- register: undercloud_floating_ip_sans_subnet
+  shell: echo {{ undercloud_floating_ip }} | sed -r 's/\/[0-9]+//'
+  changed_when: False
+
+- template: src=etc/init/ucarp.conf dest=/etc/init/ucarp.conf owner=root mode=0644
+  notify: restart ucarp
+
+- service: name=ucarp state=started
+
