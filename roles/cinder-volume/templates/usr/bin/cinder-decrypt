@@ -1,0 +1,18 @@
+#!/bin/bash
+set -eu
+
+if vgs | grep cinder-volumes; then
+  echo "volume group already mounted - noop."
+  exit 0
+fi
+
+echo "enter the cinder.passphrase:"
+losetup -e twofish /dev/loop0 {{ cinder.volume_file }}
+
+if ! vgs | grep cinder-volumes; then
+  echo "ERROR: failed to mount cinder volume file. Wrong passphrase?"
+  exit 1
+fi
+
+service cinder-volume restart
+

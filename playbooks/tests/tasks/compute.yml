@@ -1,0 +1,5 @@
+---
+- hosts: compute
+  tasks:
+    - name: cinder-volumes group exists
+      shell: vgs | grep cinder-volumes
