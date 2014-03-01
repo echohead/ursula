@@ -2,7 +2,7 @@
 
 source $(dirname $0)/common
 
-which nova >/dev/null || die "nova client must be present"
+which heat >/dev/null || die "heat client must be present"
 
 which ansible-playbook >/dev/null || die "ansible-playbook must be present"
 ansible --version | grep "ansible 1.[45]" >/dev/null || die "ansible 1.4 or 1.5 is required"
