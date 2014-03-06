@@ -75,3 +75,8 @@
 
 - sensu_check: name=memcached-graphite plugin=memcached-graphite.rb args='--host {{ primary_ip }} --scheme stats.{{ inventory_hostname  }}'
   notify: restart sensu-client
+
+
+# stack usage
+
+- sensu_metrics_check: name=nova-usage plugin=nova-usage.sh interval=300 use_sudo=True args='{{ stack_env }}'
